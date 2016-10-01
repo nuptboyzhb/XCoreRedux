@@ -4,14 +4,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 
 import com.example.haibozheng.myapplication.R;
-import com.example.haibozheng.myapplication.actions.ContactsAction;
+import com.example.haibozheng.myapplication.actions.ContactsActionCreator;
 import com.example.haibozheng.myapplication.helper.UIBinderHelperImpl;
 import com.example.haibozheng.myapplication.model.wrapper.ContactsWrapper;
-import com.github.nuptboyzhb.xcore.adapter.XCoreItemUIComponent;
-import com.github.nuptboyzhb.xcore.adapter.XCoreRecyclerAdapter;
+import com.github.nuptboyzhb.xcore.components.item.XCoreItemUIComponent;
+import com.github.nuptboyzhb.xcore.components.XCoreRecyclerAdapter;
 import com.github.nuptboyzhb.xcore.components.IXCoreComponent;
 import com.github.nuptboyzhb.xcore.eventbus.XCoreBus;
 
@@ -46,7 +45,7 @@ public class ImageItemComponent extends XCoreItemUIComponent implements View.OnC
     @Override
     public void bindView(IXCoreComponent coreComponent,
                          XCoreRecyclerAdapter coreRecyclerAdapter,
-                         XCoreRecyclerAdapter.IDataComponent data,
+                         XCoreRecyclerAdapter.IDataWrapper data,
                          int pos) {
         mContactsWrapper = (ContactsWrapper) data;
         mUIBinderHelperImpl.from(R.id.item_content_tv).setText(mContactsWrapper.bindContentText())
@@ -64,7 +63,7 @@ public class ImageItemComponent extends XCoreItemUIComponent implements View.OnC
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.checkbox) {
-            XCoreBus.getInstance().post(ContactsAction.checkBoxClick(mContactsWrapper));
+            XCoreBus.getInstance().post(ContactsActionCreator.checkBoxClick(mContactsWrapper));
         }
     }
 }

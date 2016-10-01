@@ -2,20 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#fff2f3f4"
-    android:layout_height="50dp">
+    android:layout_height="50dp"
+    android:background="#fff2f3f4">
 
     <TextView
         android:id="@+id/category_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="10dp"
         android:gravity="center_vertical|left"
         android:maxLines="1"
         android:textColor="#4a4a4a"
         android:textSize="14dp"
-        tools:text="L" />
+        tools:text="浙江省杭州市" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="#afa5a5a5" />
 
 </RelativeLayout>

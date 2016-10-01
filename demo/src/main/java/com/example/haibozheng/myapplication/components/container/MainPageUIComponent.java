@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.example.haibozheng.myapplication.R;
 import com.example.haibozheng.myapplication.RecyclerViewActivity;
-import com.github.nuptboyzhb.xcore.components.ui.XCoreUIBaseComponent;
+import com.github.nuptboyzhb.xcore.components.XCoreUIBaseComponent;
 
 /**
  * @version mochuan.zhb on 16/9/15.
@@ -36,7 +36,7 @@ public class MainPageUIComponent extends XCoreUIBaseComponent {
     }
 
     @Override
-    public void onViewCreated(Context context) {
+    public void onViewCreated(View view) {
         findViewById(R.id.text_hello).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,8 +45,4 @@ public class MainPageUIComponent extends XCoreUIBaseComponent {
         });
     }
 
-    @Override
-    public String getComponentId() {
-        return "main_page";
-    }
 }

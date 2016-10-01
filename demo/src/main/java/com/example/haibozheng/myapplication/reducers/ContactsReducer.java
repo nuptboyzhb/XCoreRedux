@@ -1,12 +1,12 @@
 package com.example.haibozheng.myapplication.reducers;
 
-import com.example.haibozheng.myapplication.actions.ContactsAction;
+import com.example.haibozheng.myapplication.actions.ContactsActionCreator;
 import com.example.haibozheng.myapplication.model.Contacts;
 import com.example.haibozheng.myapplication.model.Title;
 import com.example.haibozheng.myapplication.model.wrapper.ContactsWrapper;
 import com.example.haibozheng.myapplication.model.wrapper.TitleWrapper;
 import com.github.nuptboyzhb.xcore.actions.XCoreAction;
-import com.github.nuptboyzhb.xcore.adapter.XCoreRecyclerAdapter;
+import com.github.nuptboyzhb.xcore.components.XCoreRecyclerAdapter;
 import com.github.nuptboyzhb.xcore.reducer.IXCoreReducer;
 
 import java.util.ArrayList;
@@ -19,17 +19,17 @@ import java.util.List;
  * @Company Alibaba Group
  * @Description 联系人的Reduce
  */
-public class ContactsReducer implements IXCoreReducer<List<XCoreRecyclerAdapter.IDataComponent>> {
+public class ContactsReducer implements IXCoreReducer<List<XCoreRecyclerAdapter.IDataWrapper>> {
 
     /**
-     * 添加
+     * 添加联系人
      *
      * @param contactsWrappers
      * @param contacts
      * @return
      */
-    private List<XCoreRecyclerAdapter.IDataComponent> addOneContacts(List<XCoreRecyclerAdapter.IDataComponent> contactsWrappers, Contacts contacts) {
-        List<XCoreRecyclerAdapter.IDataComponent> wrappers = new ArrayList<>(contactsWrappers);
+    private List<XCoreRecyclerAdapter.IDataWrapper> addOneContacts(List<XCoreRecyclerAdapter.IDataWrapper> contactsWrappers, Contacts contacts) {
+        List<XCoreRecyclerAdapter.IDataWrapper> wrappers = new ArrayList<>(contactsWrappers);
         ContactsWrapper contactsWrapper = new ContactsWrapper();
         contactsWrapper.setContacts(contacts);
         wrappers.add(contactsWrapper);
@@ -37,14 +37,14 @@ public class ContactsReducer implements IXCoreReducer<List<XCoreRecyclerAdapter.
     }
 
     /**
-     * 添加
+     * 添加标题
      *
      * @param contactsWrappers
      * @param value
      * @return
      */
-    private List<XCoreRecyclerAdapter.IDataComponent> addOneTitle(List<XCoreRecyclerAdapter.IDataComponent> contactsWrappers, Title value) {
-        List<XCoreRecyclerAdapter.IDataComponent> wrappers = new ArrayList<>(contactsWrappers);
+    private List<XCoreRecyclerAdapter.IDataWrapper> addOneTitle(List<XCoreRecyclerAdapter.IDataWrapper> contactsWrappers, Title value) {
+        List<XCoreRecyclerAdapter.IDataWrapper> wrappers = new ArrayList<>(contactsWrappers);
         TitleWrapper titleWrapper = new TitleWrapper();
         titleWrapper.setTitle(value);
         wrappers.add(titleWrapper);
@@ -57,8 +57,8 @@ public class ContactsReducer implements IXCoreReducer<List<XCoreRecyclerAdapter.
      * @param contactsWrappers
      * @return
      */
-    private List<XCoreRecyclerAdapter.IDataComponent> deleteLast(List<XCoreRecyclerAdapter.IDataComponent> contactsWrappers) {
-        List<XCoreRecyclerAdapter.IDataComponent> wrappers = new ArrayList<>(contactsWrappers);
+    private List<XCoreRecyclerAdapter.IDataWrapper> deleteLast(List<XCoreRecyclerAdapter.IDataWrapper> contactsWrappers) {
+        List<XCoreRecyclerAdapter.IDataWrapper> wrappers = new ArrayList<>(contactsWrappers);
         if (wrappers.size() > 0) {
             wrappers.remove(wrappers.size() - 1);
         }
@@ -72,25 +72,25 @@ public class ContactsReducer implements IXCoreReducer<List<XCoreRecyclerAdapter.
      * @param value
      * @return
      */
-    private List<XCoreRecyclerAdapter.IDataComponent> changeCheckBoxStatus(List<XCoreRecyclerAdapter.IDataComponent> contactsWrappers, ContactsWrapper value) {
+    private List<XCoreRecyclerAdapter.IDataWrapper> changeCheckBoxStatus(List<XCoreRecyclerAdapter.IDataWrapper> contactsWrappers, ContactsWrapper value) {
         value.isChecked = !value.isChecked;
         return contactsWrappers;
     }
 
     @Override
-    public List<XCoreRecyclerAdapter.IDataComponent> reduce(List<XCoreRecyclerAdapter.IDataComponent> contactsWrappers, XCoreAction XCoreAction) {
-        switch (XCoreAction.type) {
-            case ContactsAction.ADD_ITEM:
-                return addOneContacts(contactsWrappers, (Contacts) XCoreAction.value);
+    public List<XCoreRecyclerAdapter.IDataWrapper> reduce(List<XCoreRecyclerAdapter.IDataWrapper> contactsWrappers, XCoreAction xcoreAction) {
+        switch (xcoreAction.type) {
+            case ContactsActionCreator.ADD_ITEM:
+                return addOneContacts(contactsWrappers, (Contacts) xcoreAction.value);
 
-            case ContactsAction.ADD_TITLE:
-                return addOneTitle(contactsWrappers, (Title) XCoreAction.value);
+            case ContactsActionCreator.ADD_TITLE:
+                return addOneTitle(contactsWrappers, (Title) xcoreAction.value);
 
-            case ContactsAction.DELETE_LAST:
+            case ContactsActionCreator.DELETE_LAST:
                 return deleteLast(contactsWrappers);
 
-            case ContactsAction.CHECK_BOX:
-                return changeCheckBoxStatus(contactsWrappers, (ContactsWrapper) XCoreAction.value);
+            case ContactsActionCreator.CHECK_BOX:
+                return changeCheckBoxStatus(contactsWrappers, (ContactsWrapper) xcoreAction.value);
         }
         return contactsWrappers;
     }

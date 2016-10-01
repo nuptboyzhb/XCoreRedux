@@ -1,12 +1,6 @@
 package com.example.haibozheng.myapplication;
 
-import com.example.haibozheng.myapplication.reducers.ContactsReducer;
-import com.github.nuptboyzhb.xcore.actions.XCoreAction;
-import com.github.nuptboyzhb.xcore.adapter.XCoreRecyclerAdapter;
-
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 

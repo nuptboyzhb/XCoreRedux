@@ -5,11 +5,13 @@ package com.github.nuptboyzhb.xcore.actions;
  * @Author Zheng Haibo
  * @Blog github.com/nuptboyzhb
  * @Company Alibaba Group
- * @Description action
+ * @Description XCoreRedux框架的action类
  */
 public class XCoreAction {
 
+    //Action的类型
     public final String type;
+    //Action携带的value,可为空
     public final Object value;
 
     public XCoreAction(String type, Object value) {
@@ -17,20 +19,25 @@ public class XCoreAction {
         this.value = value;
     }
 
-
     public XCoreAction(String type) {
         this(type, null);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
 
-        XCoreAction XCoreAction = (XCoreAction) o;
+        XCoreAction xCoreAction = (XCoreAction) object;
 
-        if (type != null ? !type.equals(XCoreAction.type) : XCoreAction.type != null) return false;
-        return value != null ? value.equals(XCoreAction.value) : XCoreAction.value == null;
+        if (type != null ? !type.equals(xCoreAction.type) : xCoreAction.type != null) {
+            return false;
+        }
+        return value != null ? value.equals(xCoreAction.value) : xCoreAction.value == null;
 
     }
 

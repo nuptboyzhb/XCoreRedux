@@ -10,9 +10,9 @@ import com.github.nuptboyzhb.xcore.actions.XCoreAction;
  * @Author Zheng Haibo
  * @Blog github.com/nuptboyzhb
  * @Company Alibaba Group
- * @Description 联系人 Action
+ * @Description 联系人 ActionCreator
  */
-public class ContactsAction {
+public class ContactsActionCreator {
 
     public static final String ADD_ITEM = "AddContacts";
     public static final String ADD_TITLE = "addCategory";

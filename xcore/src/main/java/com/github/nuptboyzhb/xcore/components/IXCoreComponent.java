@@ -17,6 +17,21 @@ import java.util.List;
  */
 public interface IXCoreComponent {
 
+    /**
+     * 创建View
+     *
+     * @param inflater
+     * @param container
+     * @return
+     */
     View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container);
+
+    /**
+     * 在此做View的初始化操作
+     *
+     * @param view
+     */
+    void onViewCreated(View view);
+
 
 }

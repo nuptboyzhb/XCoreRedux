@@ -1,10 +1,9 @@
 package com.example.haibozheng.myapplication;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 
-import com.example.haibozheng.myapplication.actions.ContactsAction;
+import com.example.haibozheng.myapplication.actions.ContactsActionCreator;
 import com.example.haibozheng.myapplication.components.container.HeaderComponent;
 import com.example.haibozheng.myapplication.components.item.ImageItemComponent;
 import com.example.haibozheng.myapplication.components.item.TextItemComponent;
@@ -12,12 +11,13 @@ import com.example.haibozheng.myapplication.model.Contacts;
 import com.example.haibozheng.myapplication.model.Title;
 import com.example.haibozheng.myapplication.reducers.ContactsReducer;
 import com.github.nuptboyzhb.xcore.actions.XCoreAction;
-import com.github.nuptboyzhb.xcore.adapter.XCoreRecyclerAdapter;
+import com.github.nuptboyzhb.xcore.components.XCoreRecyclerAdapter;
 import com.github.nuptboyzhb.xcore.components.impl.XCoreRecyclerViewComponent;
 import com.github.nuptboyzhb.xcore.eventbus.XCoreBus;
 import com.github.nuptboyzhb.xcore.stores.XCoreStore;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,12 +27,12 @@ import java.util.List;
  * @Company Alibaba Group
  * @Description 列表ActivityDemo
  */
-public class RecyclerViewActivity extends Activity {
+public class RecyclerViewActivity extends AppCompatActivity {
 
     private XCoreRecyclerViewComponent mXCoreRecyclerViewComponent;
     private HeaderComponent mHeaderComponent;
 
-    private XCoreStore<List<XCoreRecyclerAdapter.IDataComponent>> mContactsListXCoreStore;
+    private XCoreStore<List<XCoreRecyclerAdapter.IDataWrapper>> mContactsListXCoreStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +40,18 @@ public class RecyclerViewActivity extends Activity {
         XCoreBus.getInstance().registerComponent(this);
         setContentView(R.layout.recycler_view_activity);
 
+        //创建数据源的store
+        mContactsListXCoreStore = XCoreStore.create(new ContactsReducer(), new ArrayList<XCoreRecyclerAdapter.IDataWrapper>());
+
         //创建RecyclerView的UI组件
         mXCoreRecyclerViewComponent = (XCoreRecyclerViewComponent) findViewById(R.id.recycler_view_component);
         //注册item组件模板
-        mXCoreRecyclerViewComponent.getXCoreRecyclerAdapter()
-                .registerItemUIComponent(new TextItemComponent())
-                .registerItemUIComponent(new ImageItemComponent());
+        mXCoreRecyclerViewComponent.registerItemComponent(new TextItemComponent())
+                .registerItemComponent(new ImageItemComponent());
 
         //创建头部组件
         mHeaderComponent = (HeaderComponent) findViewById(R.id.recycler_view_header_component);
 
-        //创建数据源的store
-        mContactsListXCoreStore = XCoreStore.create(new ContactsReducer(), mXCoreRecyclerViewComponent.getXCoreRecyclerAdapter().getDataSet());
         //添加观察者
         mContactsListXCoreStore.subscribe(mXCoreRecyclerViewComponent);
         mContactsListXCoreStore.subscribe(mHeaderComponent);
@@ -70,9 +70,9 @@ public class RecyclerViewActivity extends Activity {
     }
 
     private void test() {
-        mContactsListXCoreStore.dispatch(ContactsAction.addCategory(new Title("李")));
-        mContactsListXCoreStore.dispatch(ContactsAction.addContacts(new Contacts("李华", "156 6666 6666", "浙江省杭州市西湖区xxx号")));
-        mContactsListXCoreStore.dispatch(ContactsAction.addContacts(new Contacts("李华2", "157 7777 7777", "浙江省杭州市西湖区xxx号")));
+        mContactsListXCoreStore.dispatch(ContactsActionCreator.addCategory(new Title("浙江省")));
+        mContactsListXCoreStore.dispatch(ContactsActionCreator.addContacts(new Contacts("李华", "156 6666 6666", "浙江省杭州市西湖区xxx号")));
+        mContactsListXCoreStore.dispatch(ContactsActionCreator.addContacts(new Contacts("李华2", "157 7777 7777", "浙江省杭州市西湖区xxx号")));
     }
 
 

@@ -13,7 +13,7 @@ import java.util.Objects;
  * @Author Zheng Haibo
  * @Blog github.com/nuptboyzhb
  * @Company Alibaba Group
- * @Description 组件之间通信
+ * @Description XCoreBus 组件之间通信
  */
 public class XCoreBus {
 
@@ -34,6 +34,11 @@ public class XCoreBus {
         return sXCoreBus;
     }
 
+    /**
+     * 注册
+     *
+     * @param object
+     */
     public void registerComponent(Object object) {
         if (object == null) {
             return;

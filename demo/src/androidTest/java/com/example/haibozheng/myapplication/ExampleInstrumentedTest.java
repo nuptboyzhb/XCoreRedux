@@ -5,14 +5,8 @@ import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.haibozheng.myapplication.actions.ContactsAction;
-import com.example.haibozheng.myapplication.model.Title;
-import com.github.nuptboyzhb.xcore.eventbus.XCoreBus;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.*;
 
 /**
  * Instrumentation test, which will execute on an Android device.

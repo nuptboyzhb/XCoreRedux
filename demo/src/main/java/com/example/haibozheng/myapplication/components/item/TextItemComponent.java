@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import com.example.haibozheng.myapplication.R;
 import com.example.haibozheng.myapplication.helper.UIBinderHelperImpl;
 import com.example.haibozheng.myapplication.model.wrapper.TitleWrapper;
-import com.github.nuptboyzhb.xcore.adapter.XCoreItemUIComponent;
-import com.github.nuptboyzhb.xcore.adapter.XCoreRecyclerAdapter;
+import com.github.nuptboyzhb.xcore.components.item.XCoreItemUIComponent;
+import com.github.nuptboyzhb.xcore.components.XCoreRecyclerAdapter;
 import com.github.nuptboyzhb.xcore.components.IXCoreComponent;
 
 /**
@@ -41,7 +41,7 @@ public class TextItemComponent extends XCoreItemUIComponent {
     @Override
     public void bindView(IXCoreComponent coreComponent,
                          XCoreRecyclerAdapter coreRecyclerAdapter,
-                         XCoreRecyclerAdapter.IDataComponent data,
+                         XCoreRecyclerAdapter.IDataWrapper data,
                          int pos) {
         TitleWrapper title = (TitleWrapper) data;
         mUIBinderHelperImpl.from(R.id.category_title_tv).setText(title.getCategoryTitle());

@@ -2,7 +2,7 @@ package com.example.haibozheng.myapplication.model.wrapper;
 
 import com.example.haibozheng.myapplication.components.item.TextItemComponent;
 import com.example.haibozheng.myapplication.model.Title;
-import com.github.nuptboyzhb.xcore.adapter.XCoreRecyclerAdapter;
+import com.github.nuptboyzhb.xcore.components.XCoreRecyclerAdapter;
 
 /**
  * @version mochuan.zhb on 16/9/28.
@@ -11,7 +11,7 @@ import com.github.nuptboyzhb.xcore.adapter.XCoreRecyclerAdapter;
  * @Company Alibaba Group
  * @Description 包装类
  */
-public class TitleWrapper implements XCoreRecyclerAdapter.IDataComponent {
+public class TitleWrapper implements XCoreRecyclerAdapter.IDataWrapper {
 
     private Title title;
 

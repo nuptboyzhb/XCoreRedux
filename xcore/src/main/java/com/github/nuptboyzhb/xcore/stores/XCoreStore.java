@@ -50,7 +50,6 @@ public class XCoreStore<State> {
         return new XCoreStore<>(reducer, initialState);
     }
 
-
     public State getState() {
         return state;
     }

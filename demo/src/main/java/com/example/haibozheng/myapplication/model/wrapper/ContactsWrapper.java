@@ -3,7 +3,7 @@ package com.example.haibozheng.myapplication.model.wrapper;
 import com.example.haibozheng.myapplication.R;
 import com.example.haibozheng.myapplication.components.item.ImageItemComponent;
 import com.example.haibozheng.myapplication.model.Contacts;
-import com.github.nuptboyzhb.xcore.adapter.XCoreRecyclerAdapter;
+import com.github.nuptboyzhb.xcore.components.XCoreRecyclerAdapter;
 
 /**
  * @version mochuan.zhb on 16/9/28.
@@ -12,7 +12,7 @@ import com.github.nuptboyzhb.xcore.adapter.XCoreRecyclerAdapter;
  * @Company Alibaba Group
  * @Description 数据模型的包装类
  */
-public class ContactsWrapper implements XCoreRecyclerAdapter.IDataComponent {
+public class ContactsWrapper implements XCoreRecyclerAdapter.IDataWrapper {
 
     private Contacts contacts;
 

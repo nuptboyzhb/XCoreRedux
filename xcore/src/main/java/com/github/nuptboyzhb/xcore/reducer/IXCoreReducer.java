@@ -10,5 +10,5 @@ import com.github.nuptboyzhb.xcore.actions.XCoreAction;
  * @Description reduce interface
  */
 public interface IXCoreReducer<State> {
-    State reduce(State state, XCoreAction XCoreAction);
+    State reduce(State state, XCoreAction xcoreAction);
 }

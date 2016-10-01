@@ -1,4 +1,4 @@
-package com.github.nuptboyzhb.xcore.adapter;
+package com.github.nuptboyzhb.xcore.components;
 
 
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.nuptboyzhb.xcore.components.IXCoreComponent;
+import com.github.nuptboyzhb.xcore.components.item.XCoreItemUIComponent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ import java.util.Map;
 public class XCoreRecyclerAdapter extends RecyclerView.Adapter<XCoreRecyclerAdapter.CommonViewHolder> {
 
     private IXCoreComponent mIXCoreComponent;//外层UI组件
-    private List<IDataComponent> mDataSet = new ArrayList<IDataComponent>();//数据源
+    private List<IDataWrapper> mDataSet = new ArrayList<IDataWrapper>();//数据源
     private SparseArray<XCoreItemUIComponent> mConfigurationSparseArray = new SparseArray<XCoreItemUIComponent>();//集合:type对应的Item组件
     private Map<String, Integer> mViewTypeMap = new HashMap<String, Integer>();//type的string和int映射
 
@@ -41,17 +41,17 @@ public class XCoreRecyclerAdapter extends RecyclerView.Adapter<XCoreRecyclerAdap
     @Override
     public CommonViewHolder onCreateViewHolder(ViewGroup viewGroup, int type) {
         //根据数据类型获取对应的item组件
-        XCoreItemUIComponent XCoreItemUIComponent = mConfigurationSparseArray.get(type);
-        if (XCoreItemUIComponent == null) {//如果未获取到,展示空item
+        XCoreItemUIComponent xcoreItemUIComponent = mConfigurationSparseArray.get(type);
+        if (xcoreItemUIComponent == null) {//如果未获取到,展示空item
             return getDefaultViewHolder(viewGroup.getContext());
         }
         try {
+            //创建一个新的Item组件
+            XCoreItemUIComponent realItem = xcoreItemUIComponent.getClass().newInstance();
             //使用item组件创建一个新的View
-            View view = XCoreItemUIComponent.onCreateView(LayoutInflater.from(viewGroup.getContext()), viewGroup);
+            View view = realItem.onCreateView(LayoutInflater.from(viewGroup.getContext()), viewGroup);
             //使用View构建内部的ViewHolder
             CommonViewHolder commonViewHolder = new CommonViewHolder(view);
-            //创建一个新的Item组件
-            XCoreItemUIComponent realItem = XCoreItemUIComponent.getClass().newInstance();
             //将创建的View设置到真是的Item组件中
             realItem.setItemView(view);
             //使用内部ViewHolder
@@ -70,7 +70,7 @@ public class XCoreRecyclerAdapter extends RecyclerView.Adapter<XCoreRecyclerAdap
 
     @Override
     public int getItemViewType(int position) {
-        IDataComponent item = mDataSet.get(position);
+        IDataWrapper item = mDataSet.get(position);
         Integer integer = mViewTypeMap.get(item.getViewType());
         if (integer == null) {
             return -1;
@@ -91,7 +91,7 @@ public class XCoreRecyclerAdapter extends RecyclerView.Adapter<XCoreRecyclerAdap
      *
      * @return
      */
-    public List<IDataComponent> getDataSet() {
+    public List<IDataWrapper> getDataSet() {
         return mDataSet;
     }
 
@@ -100,7 +100,7 @@ public class XCoreRecyclerAdapter extends RecyclerView.Adapter<XCoreRecyclerAdap
      *
      * @param dataSet
      */
-    public void setDataSet(List<IDataComponent> dataSet) {
+    public void setDataSet(List<IDataWrapper> dataSet) {
         this.mDataSet = dataSet;
         notifyDataSetChanged();
     }
@@ -178,7 +178,7 @@ public class XCoreRecyclerAdapter extends RecyclerView.Adapter<XCoreRecyclerAdap
     /**
      * 数据源必须实现的接口
      */
-    public interface IDataComponent {
+    public interface IDataWrapper {
         String getViewType();
     }
 
@@ -187,14 +187,14 @@ public class XCoreRecyclerAdapter extends RecyclerView.Adapter<XCoreRecyclerAdap
      */
     public static class CommonViewHolder extends RecyclerView.ViewHolder {
 
-        private XCoreItemUIComponent XCoreItemUIComponent;
+        private XCoreItemUIComponent mXCoreItemUIComponent;
 
         public void setXCoreItemUIComponent(XCoreItemUIComponent XCoreItemUIComponent) {
-            this.XCoreItemUIComponent = XCoreItemUIComponent;
+            this.mXCoreItemUIComponent = XCoreItemUIComponent;
         }
 
         public XCoreItemUIComponent getXCoreItemUIComponent() {
-            return XCoreItemUIComponent;
+            return mXCoreItemUIComponent;
         }
 
         public CommonViewHolder(View itemView) {
@@ -203,18 +203,18 @@ public class XCoreRecyclerAdapter extends RecyclerView.Adapter<XCoreRecyclerAdap
 
         public void bindView(IXCoreComponent mIXCoreComponent,
                              XCoreRecyclerAdapter XCoreRecyclerAdapter,
-                             XCoreRecyclerAdapter.IDataComponent data,
+                             IDataWrapper data,
                              int pos) {
-            if (XCoreItemUIComponent == null) {
+            if (mXCoreItemUIComponent == null) {
                 return;
             }
-            XCoreItemUIComponent.bindView(mIXCoreComponent, XCoreRecyclerAdapter, data
+            mXCoreItemUIComponent.bindView(mIXCoreComponent, XCoreRecyclerAdapter, data
                     , pos);
         }
 
         public void onViewDetachedFromWindow() {
-            if (XCoreItemUIComponent != null) {
-                XCoreItemUIComponent.onViewDetachedFromWindow();
+            if (mXCoreItemUIComponent != null) {
+                mXCoreItemUIComponent.onViewDetachedFromWindow();
             }
         }
     }
