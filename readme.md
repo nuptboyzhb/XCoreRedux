@@ -1,5 +1,5 @@
-##XCoreRedux框架:Android UI组件化与Redux实践
-@Author: 莫川 [https://github.com/nuptboyzhb/](https://github.com/nuptboyzhb/)<br>
+## XCoreRedux框架:Android UI组件化与Redux实践
+@author: 莫川 [https://github.com/nuptboyzhb/](https://github.com/nuptboyzhb/)<br>
 XCoreRedux源码+Demo：[https://github.com/nuptboyzhb/XCoreRedux](https://github.com/nuptboyzhb/XCoreRedux)<br>
 使用android studio打开该项目。
 ### 目录结构
@@ -285,16 +285,13 @@ public class XCoreStore<State> {
 
 在Android中，一个Redux页面(Fragment或者Activity) 只有一个单一的 store。当需要拆分数据处理逻辑时，应该使用 reducer组合，而不是创建多个Store。
 
-#### 数据流
-wrapper
-
 #### 搭配UIComponent
+与前端的Redux搭配React类似，XCoreRedux搭配UIComponent。
 
-### UI组件化
-在前段的React框架下，我们常常听说组件的概念：‘UI组件’。那么什么是UI组件呢？以下图为例：
-
-
-普通组件，Item组件
+### UI组件化(UIComponent)
+在前段的React框架下，我们常常听说组件的概念：‘UI组件’。那么什么是UI组件呢？以下图为例：<br>
+![xcoreredux_demo.png](pics/xcoreredux_demo.png)
+红色的区域为“普通组件”，绿色的区域为两种不同类型的“Item组件”。因此，在UIComponent里，组件分两种：普通组件和item组件(或称为cell组件)。
 
 #### 普通组件
 - 单组件，比如一个自定义的Widget，就是一样View。比如自定义的CircleImageView等。
