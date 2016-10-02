@@ -1,4 +1,5 @@
 ##XCoreRedux框架:Android UI组件化与Redux实践
+@Author: 莫川 [https://github.com/nuptboyzhb/](https://github.com/nuptboyzhb/)<br>
 XCoreRedux源码+Demo：[https://github.com/nuptboyzhb/XCoreRedux](https://github.com/nuptboyzhb/XCoreRedux)<br>
 使用android studio打开该项目。
 ### 目录结构
@@ -11,7 +12,7 @@ XCoreRedux源码+Demo：[https://github.com/nuptboyzhb/XCoreRedux](https://githu
 
 ### 前言
 - Android开发当中的Code Architecture思考<br>
-最近看了很多前端的框架，React、Flux、Redux等，React和Redux都是前端比较流行的框架。而android方面，Google官方貌似不太Care此事，业内也没有公认的优秀Architecture。与前端类似，在Android开发中，同样也面临着复杂的数据state管理的问题。在理解Store、Reducer和Action的基础上，最终，基于Redux+React的思想，提出了一个基于Android平台Redux框架，我给它起名叫作：XCoreRedux。本仓库就是XCoreRedux+UIComponent框架的实现。希望大家能够提出更好的意见。
+最近看了很多前端的框架，React、Flux、Redux等，React和Redux都是前端比较流行的框架。而android方面，Google官方貌似不太Care此事，业内也没有公认的优秀Architecture。与前端类似，在Android开发中，同样也面临着复杂的数据state管理的问题。在理解Store、Reducer和Action的基础上，最终，基于Redux+React的思想，提出了一个基于Android平台Redux框架，我给它起名叫作：XCoreRedux。本仓库就是XCoreRedux+UIComponent框架的实现。它表达的是一种思想，希望大家能够提出更好的意见。
 
 ### XCoreRedux框架介绍
 
@@ -467,6 +468,36 @@ Item组件与列表组件及普通组件之间的通信。在本Demo中使用的
 XCoreBus.getInstance().post(action);
 ```
 
+### 小优化
+对于数据绑定方面，做了两个优化：
+1.把数据通过Wrapper包装
+2.使用UIBinderHelper做流式绑定，比如：
+
+``` java
+
+public class ImageItemComponent extends XCoreItemUIComponent implements View.OnClickListener {
+
+    private UIBinderHelperImpl mUIBinderHelperImpl;
+
+    ...
+
+    @Override
+    public void bindView(IXCoreComponent coreComponent,
+                         XCoreRecyclerAdapter coreRecyclerAdapter,
+                         XCoreRecyclerAdapter.IDataWrapper data,
+                         int pos) {
+        mContactsWrapper = (ContactsWrapper) data;
+        mUIBinderHelperImpl.from(R.id.item_content_tv).setText(mContactsWrapper.bindContentText())
+                .from(R.id.item_pic_iv).setImageUrl(mContactsWrapper.getAvatarUrl())
+                .from(R.id.item_title_tv).setText(mContactsWrapper.bindItemTitle())
+                .from(R.id.checkbox).setButtonDrawable(mContactsWrapper.isChecked ? R.mipmap.checkbox_checked : R.mipmap.checkbox_normal)
+                .setOnClickListener(this);
+    }
+
+    ...
+}
+```
+
 ###后续
 - 1.异步
 - 2.Middleware中间件
@@ -476,6 +507,23 @@ XCoreBus.getInstance().post(action);
 - 1. [Redux中文文档](http://cn.redux.js.org/docs/basics/Reducers.html)
 - 2. [Flux and Android](http://armueller.github.io/android/2015/03/29/flux-and-android.html)
 - 3. [AndroidFlux一览](http://androidflux.github.io/docs/overview.html#content)
+
+
+### License
+
+Copyright 2016  [Zheng Haibo](https://github.com/nuptboyzhb/)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 
 
