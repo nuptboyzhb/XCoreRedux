@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <!-- 头部组件-->
     <com.example.haibozheng.myapplication.components.container.HeaderComponent
         android:id="@+id/recycler_view_header_component"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
+    <!-- 列表组件-->
     <com.github.nuptboyzhb.xcore.components.impl.XCoreRecyclerViewComponent
         android:id="@+id/recycler_view_component"
         android:layout_width="match_parent"

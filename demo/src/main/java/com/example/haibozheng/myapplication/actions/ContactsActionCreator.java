@@ -14,7 +14,7 @@ import com.github.nuptboyzhb.xcore.actions.XCoreAction;
  */
 public class ContactsActionCreator {
 
-    public static final String ADD_ITEM = "AddContacts";
+    public static final String ADD_ITEM = "addContacts";
     public static final String ADD_TITLE = "addCategory";
     public static final String DELETE_LAST = "deleteLast";
     public static final String CHECK_BOX = "contactsCheck";

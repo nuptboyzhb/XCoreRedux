@@ -63,28 +63,31 @@ public class XCoreStore<State> {
         }
     }
 
-    public void dispatchAsync(final XCoreAction action, final CallBack callBack) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                dispatch(action);
-                if (callBack != null) {
-                    callBack.onFinished();
-                }
-            }
-        }).start();
-    }
-
+    /**
+     * 注册接口;添加观察者,当state改变时,通知观察者
+     *
+     * @param listener
+     */
     public void subscribe(final IStateChangeListener<State> listener) {
         listeners.add(listener);
     }
 
-    public interface IStateChangeListener<S> {
-        void onStateChanged(S state);
+    /**
+     * 注销
+     *
+     * @param listener
+     */
+    public void unSubscribe(final IStateChangeListener<State> listener) {
+        listeners.remove(listener);
     }
 
-    public interface CallBack {
-        void onFinished();
+    /**
+     * 状态改变的回调接口
+     *
+     * @param <S> 状态
+     */
+    public interface IStateChangeListener<S> {
+        void onStateChanged(S state);
     }
 
 }

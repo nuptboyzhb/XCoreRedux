@@ -44,15 +44,17 @@ public class XCoreRecyclerViewComponent extends XCoreUIBaseComponent implements 
     }
 
     @Override
-    public int getLayoutResId() {
+    public final int getLayoutResId() {
         return R.layout.xcore_recyclerview_component;
     }
 
     @Override
     public void onViewCreated(View view) {
+        //初始化View
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.xcore_refresh_layout);
         mSwipeRefreshLayout.setEnabled(false);
         mRecyclerView = (RecyclerView) findViewById(R.id.xcore_rv);
+        //初始化RecyclerView
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mXCoreRecyclerAdapter = new XCoreRecyclerAdapter(this);
@@ -75,12 +77,23 @@ public class XCoreRecyclerViewComponent extends XCoreUIBaseComponent implements 
         return mXCoreRecyclerAdapter;
     }
 
+    /**
+     * 当状态发生变化时,自动通知
+     *
+     * @param status
+     */
     @Override
     public void onStateChanged(List<XCoreRecyclerAdapter.IDataWrapper> status) {
         mXCoreRecyclerAdapter.setDataSet(status);
         mXCoreRecyclerAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 对外提供item组件的注册
+     *
+     * @param xCoreItemUIComponent
+     * @return
+     */
     public XCoreRecyclerViewComponent registerItemComponent(XCoreItemUIComponent xCoreItemUIComponent) {
         mXCoreRecyclerAdapter.registerItemUIComponent(xCoreItemUIComponent);
         return this;
